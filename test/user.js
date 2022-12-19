@@ -21,10 +21,37 @@ describe("Users", () => {
   });
   it("Get/users/:id", async () => {
     const res = await request.get(
-      `users/5119?access-token=${process.env.TOKEN_API}`
+      `users/2850?access-token=${process.env.TOKEN_API}`
     );
 
-    expect(res.body.id).to.be.equal(5119);
+    expect(res.body.id).to.be.equal(2850);
+  });
+  it("Get/users with query params", async (page = 5, status = "active", gender = "female") => {
+    const url = `page=${page}&gender=${gender}&status=${status}`;
+    const res = await request.get(
+      `users?access-token=${process.env.TOKEN_API}&${url}`
+    );
+
+    expect(res.body).to.be.not.be.empty;
+    res.body.forEach((data) => {
+      expect(data.gender).to.eq(gender);
+      expect(data.status).to.eq(status);
+    });
+  });
+
+  it("Post/users", async () => {
+    const data = {
+      name: "Prabhat Singh Mern Wallah",
+      email: "Hello@gmail.com",
+      gender: "female",
+      status: "inactive",
+    };
+    const res = await request
+      .post("users")
+      .set("Authorization", `Bearer ${process.env.TOKEN_API}`)
+      .send(data);
+
+    console.log(res.body);
   });
 
   //filter data
