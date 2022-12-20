@@ -42,7 +42,7 @@ describe("Users", () => {
   it("Post/users", async () => {
     const data = {
       name: "Prabhat Singh Mern Wallah",
-      email: "Hello@gmail.com",
+      email: `Hell${Math.floor(1000 * Math.random())}@gmail.com`,
       gender: "female",
       status: "inactive",
     };
@@ -50,8 +50,10 @@ describe("Users", () => {
       .post("users")
       .set("Authorization", `Bearer ${process.env.TOKEN_API}`)
       .send(data);
-
     console.log(res.body);
+    // res.body.email="taltal@gmail.com"//chaging the email check failed or not
+    expect(res.body).to.deep.include(data); //deep clone like you understand
+    //  expect(res.body.status).to.eq(data.status);
   });
 
   //filter data
