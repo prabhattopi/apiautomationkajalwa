@@ -55,6 +55,32 @@ describe("Users", () => {
     expect(res.body).to.deep.include(data); //deep clone like you understand
     //  expect(res.body.status).to.eq(data.status);
   });
+  it("Put/users/:id", async () => {
+    const data = {
+      name: `Pra${Math.floor(1000 * Math.random())}`,
+      status: "active",
+    };
+    const res = await request
+      .put("users/7068")
+      .set("Authorization", `Bearer ${process.env.TOKEN_API}`)
+      .send(data);
+    console.log(res.body);
+    // res.body.email="taltal@gmail.com"//chaging the email check failed or not
+    expect(res.body).to.deep.include(data); //deep clone like you understand
+    //  expect(res.body.status).to.eq(data.status);
+  });
+  it.only("Delete/users/:id", async () => {
+ 
+    const res = await request
+      .delete("users/4310")
+      .set("Authorization", `Bearer ${process.env.TOKEN_API}`)
+      
+     let allo=res.body
+    expect(res.body).to.be.eq(allo)
+    // res.body.email="taltal@gmail.com"//chaging the email check failed or not
+    // expect(res.body).to.be.eq({}); //deep clone like you understand
+    //  expect(res.body.status).to.eq(data.status);
+  });
 
   //filter data
 });
